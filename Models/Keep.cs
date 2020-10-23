@@ -9,6 +9,7 @@ namespace Keepr.Models
         public string Img { get; set; }
         public int Views { get; set; }
         public int Shares { get; set; }
+        // NOTE keeps is the number of times this has been saved to someone's Vault
         public int Keeps { get; set; }
         public Profile Creator { get; set; }
     }
