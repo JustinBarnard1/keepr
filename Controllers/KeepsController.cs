@@ -64,6 +64,24 @@ namespace Keepr.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<ActionResult<Keep>> Edit(int id, [FromBody] Keep editKeep)
+        {
+            try
+            {
+                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+                editKeep.CreatorId = userInfo.Id;
+                editKeep.Creator = userInfo;
+                editKeep.Id = id;
+                return Ok(_ks.Edit(editKeep, userInfo.Id));
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<ActionResult<string>> Delete(int id)
@@ -78,5 +96,6 @@ namespace Keepr.Controllers
                 return BadRequest(e.Message);
             }
         }
+
     }
 }
