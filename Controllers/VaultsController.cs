@@ -13,10 +13,42 @@ namespace Keepr.Controllers
     public class VaultsController : ControllerBase
     {
         private readonly VaultsService _vs;
+        private readonly KeepsService _ks;
 
-        public VaultsController(VaultsService vs)
+        public VaultsController(VaultsService vs, KeepsService ks)
         {
             _vs = vs;
+            _ks = ks;
+        }
+
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<ActionResult<Vault>> GetVaultById(string id)
+        {
+            try
+            {
+                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+                return Ok(_vs.GetById(userInfo?.Id, id));
+
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("{id}/keeps")]
+        public async Task<ActionResult<IEnumerable<Keep>>> GetKeepsByVault(int id)
+        {
+            try
+            {
+                Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+                return Ok(_ks.GetAllByVaultId(id));
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]

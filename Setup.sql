@@ -36,6 +36,7 @@ DROP TABLE vaults; */
 /* CREATE TABLE IF NOT EXISTS vaultkeeps
 (
     id INT AUTO_INCREMENT,
+    creatorId VARCHAR(255) NOT NULL,
     vaultId INT,
     keepId INT,
 

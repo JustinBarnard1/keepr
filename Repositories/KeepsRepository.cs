@@ -42,6 +42,21 @@ namespace Keepr.Repositories
             _db.Execute(sql, new { keepId });
         }
 
+        internal IEnumerable<Keep> GetByVaultId(int id)
+        {
+            string sql = @"
+            SELECT
+            k.*,
+            vk.*,
+            p.*
+            FROM
+            keeps k
+            JOIN vaultkeeps vk ON k.id = vk.keepId
+            JOIN profiles p ON k.creatorId = p.id
+            WHERE vk.vaultId = @id;";
+            return _db.Query<Keep, VaultKeep, Profile, Keep>(sql, (keep, vaultkeep, profile) => { keep.Creator = profile; return keep; }, new { id }, splitOn: "id");
+        }
+
         internal int Create(Keep newKeep)
         {
             string sql = @"

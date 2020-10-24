@@ -34,6 +34,11 @@ namespace Keepr.Services
             return newKeep;
         }
 
+        internal IEnumerable<Keep> GetAllByVaultId(int id)
+        {
+            return _repo.GetByVaultId(id);
+        }
+
         internal object Delete(int keepId, string userId)
         {
             Keep original = _repo.GetById(keepId);

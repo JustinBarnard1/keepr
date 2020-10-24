@@ -35,5 +35,10 @@ namespace Keepr.Services
             _repo.Remove(queryId);
             return "Successfully Delorted";
         }
+
+        internal Vault GetById(string userId, string queryId)
+        {
+            return _repo.GetVaultById(queryId);
+        }
     }
 }
