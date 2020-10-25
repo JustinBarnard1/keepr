@@ -10,7 +10,6 @@
         <i
           class="pluslg fa fa-plus text-success mx-1"
           v-if="profile.id == searchedProfile.id"
-          @click="addVault"
           aria-hidden="true"
         ></i>
       </div>
@@ -30,7 +29,6 @@
         <i
           class="pluslg fa fa-plus text-success mx-1"
           v-if="profile.id == searchedProfile.id"
-          @click="addVault"
           aria-hidden="true"
         ></i>
       </div>
@@ -68,11 +66,12 @@ export default {
     },
   },
   mounted() {
+    this.$store.dispatch("getProfile");
     this.$store.dispatch("getProfileKeeps", this.$route.params.profileId);
     this.$store.dispatch("getSearchedProfile", this.$route.params.profileId);
     this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
     console.log(this.$route.params);
-    console.log(profile.id);
+    console.log(this.profile.id);
   },
   methods: {},
   components: {
