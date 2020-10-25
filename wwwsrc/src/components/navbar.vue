@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-warning">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <h1 class="border border-primary">K</h1>
+        <h1 class="border border-primary">KEEPR</h1>
       </div>
     </router-link>
     <button
@@ -17,8 +17,25 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" :class="{ active: $route.name == 'Home' }">
+          <router-link :to="{ name: 'Home' }" class="nav-link"
+            >Home</router-link
+          >
+        </li>
+        <li
+          class="nav-item"
+          v-if="$auth.isAuthenticated"
+          :class="{ active: $route.name == 'Profile' }"
+        >
+          <router-link
+            class="nav-link"
+            :to="{ name: 'Profile', params: { profileId: this.profile.id } }"
+            >Profile</router-link
+          >
+        </li>
+      </ul>
       <span class="navbar-text">
-        <!-- Consider changing this to a profile picture -->
         <button
           class="btn btn-success"
           @click="login"
@@ -48,6 +65,11 @@ export default {
     async logout() {
       resetBearer();
       await this.$auth.logout({ returnTo: window.location.origin });
+    },
+  },
+  computed: {
+    profile() {
+      return this.$store.state.profile;
     },
   },
 };

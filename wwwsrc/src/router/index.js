@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 // @ts-ignore
 import Home from "../pages/Home.vue";
+import Profile from "../pages/Profile.vue";
 
 Vue.use(VueRouter);
 
@@ -10,6 +11,11 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/profile/:profileId",
+    name: "Profile",
+    component: Profile,
   }
 ];
 
