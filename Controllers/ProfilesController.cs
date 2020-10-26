@@ -67,7 +67,6 @@ namespace Keepr.Controllers
             }
         }
         [HttpGet("{id}/vaults")]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<Vault>>> GetVaults(string id)
         {
             try
