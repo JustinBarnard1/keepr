@@ -1,9 +1,11 @@
 <template>
   <div class="profile container-fluid">
-    <h1 v-if="this.$route.params != profile.id">
-      {{ searchedProfile.name }}'s Page
-    </h1>
-    <h1 v-else>{{ profile.name }}'s Page</h1>
+    <div v-if="this.$route.params != profile.id">
+      <h1>{{ searchedProfile.name }}'s Page</h1>
+    </div>
+    <div v-else>
+      <h1>{{ profile.name }}'s Page</h1>
+    </div>
     <div class="row">
       <div class="col-12 d-flex">
         <h1>Vaults</h1>
@@ -14,14 +16,16 @@
         ></i>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <vault-comp
-          v-for="vault in vaults"
-          :key="vault.creatorId"
-          :vaultProp="vault"
-        />
-      </div>
+    <div v-if="vaults != null" class="row">
+      <vault-comp
+        class="col-3 d-flex flex-column"
+        v-for="vault in vaults"
+        :key="vault.id"
+        :vaultProp="vault"
+      />
+    </div>
+    <div v-else>
+      <h1>No Vaults</h1>
     </div>
     <div class="row">
       <div class="col-12 d-flex">
@@ -41,7 +45,7 @@
 
 
 <script>
-import vaultcomp from "../components/VaultComp";
+import vaultComp from "../components/VaultComp";
 import keepComp from "../components/KeepComp";
 export default {
   name: "profile",
@@ -59,23 +63,22 @@ export default {
       return this.$store.state.profile;
     },
     vaults() {
-      return this.$store.state.vaults;
+      return this.$store.state.profileVaults;
     },
-    searchedVaults() {
-      return this.$store.state.searchedVaults;
-    },
+    // searchedVaults() {
+    //   return this.$store.state.searchedVaults;
+    // },
   },
   mounted() {
     this.$store.dispatch("getProfile");
     this.$store.dispatch("getProfileKeeps", this.$route.params.profileId);
     this.$store.dispatch("getSearchedProfile", this.$route.params.profileId);
     this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
-    console.log(this.$route.params);
-    console.log(this.profile.id);
   },
   methods: {},
   components: {
     keepComp,
+    vaultComp,
   },
 };
 </script>

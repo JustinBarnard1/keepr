@@ -1,5 +1,15 @@
 <template>
-  <div class="vault-comp card"></div>
+  <div class="vault-comp card col-3 justify-content-center m-3">
+    <i
+      class="fa fa-times text-danger"
+      v-if="profile.id == vaultProp.creatorId"
+      @click="deleteVault"
+      aria-hidden="true"
+    ></i>
+    <img :src="vaultProp.img" alt="" />
+    <h2 @click="viewVault">{{ vaultProp.name }}</h2>
+    <p>{{ vaultProp.description }}</p>
+  </div>
 </template>
 
 
@@ -9,9 +19,24 @@ export default {
   data() {
     return {};
   },
-  computed: {},
-  methods: {},
+  computed: {
+    profile() {
+      return this.$store.state.profile;
+    },
+  },
+  methods: {
+    deleteVault() {
+      console.log("delete vault");
+    },
+    viewVault() {
+      this.$router.push({
+        name: "Vault",
+        params: { vaultId: this.vaultProp.id },
+      });
+    },
+  },
   components: {},
+  props: ["vaultProp"],
 };
 </script>
 

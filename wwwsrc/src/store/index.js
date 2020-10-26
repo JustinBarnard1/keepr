@@ -93,6 +93,14 @@ export default new Vuex.Store({
       } catch (e) {
         console.error(e)
       }
+    },
+    async getKeepsByVaultId({ commit, dispatch }, vaultId) {
+      try {
+        let res = await api.get("vaults/" + vaultId + "/keeps")
+        commit("setKeeps", res.data)
+      } catch (e) {
+        console.error(e)
+      }
     }
   },
 });
