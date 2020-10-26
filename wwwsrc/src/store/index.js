@@ -106,13 +106,16 @@ export default new Vuex.Store({
         console.error(e)
       }
     },
-    async setActiveKeep({ commit, dispatch }, keepId) {
+    async getActiveKeep({ commit, dispatch }, keepId) {
       try {
         let res = await api.get("keeps/" + keepId)
         commit("setActiveKeep", res.data)
       } catch (e) {
         console.error(e)
       }
+    },
+    async addKeepToVault({ commit, dispatch }, data) {
+      let res = await api.post("vaultkeeps/", data)
     }
   },
 });

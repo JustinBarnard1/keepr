@@ -1,21 +1,29 @@
 <template>
   <div
-    class="media m-1 keep-comp card col-3 justify-content-center"
+    v-bind:style="{
+      backgroundImage: 'url(' + this.keepProp.img + ')',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center center',
+      backgroundRepeat: 'no-repeat',
+    }"
+    class="media m-2 keep-comp card"
+    style="min-height: 20vh"
     data-toggle="modal"
     :data-target="'#' + modalId"
     @click="setActiveKeep"
   >
-    <i
-      class="fa fa-times text-danger"
-      v-if="profile.id == keepProp.creatorId"
-      @click="deleteKeep"
-      aria-hidden="true"
-    ></i>
-    <img :src="keepProp.img" alt="" />
-    <h2>{{ keepProp.name }}</h2>
-    <p>{{ keepProp.description }}</p>
-    <img :src="keepProp.creator.picture" @click="viewProfile" alt="" />
-    <details-modal :id="modalId" color="bg-danger">
+    <div>
+      <h3>{{ keepProp.name }}</h3>
+    </div>
+    <div>
+      <img
+        style="max-width: 25px"
+        :src="keepProp.creator.picture"
+        @click="viewProfile"
+        alt=""
+      />
+    </div>
+    <details-modal class="my-modal" :id="modalId" color="bg-danger">
       <template v-slot:body>
         <keep-details />
       </template>
@@ -51,7 +59,8 @@ export default {
       });
     },
     setActiveKeep() {
-      this.$store.dispatch("setActiveKeep", this.keepProp.id);
+      this.$store.dispatch("getActiveKeep", this.keepProp.id);
+      this.$store.dispatch("getProfileVaults", this.profile.id);
     },
   },
   props: ["keepProp"],
@@ -63,5 +72,18 @@ export default {
 </script>
 
 
-<style scoped>
+<style>
+.card-columns {
+  column-count: 4;
+}
+
+div.modal.my-modal .modal-dialog {
+  width: 700px;
+}
+
+.fillit {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
 </style>

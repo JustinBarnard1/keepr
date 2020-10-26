@@ -3,8 +3,10 @@
     <div class="row d-flex flex-column">
       <h1 class="col text-center">Welcome</h1>
     </div>
-    <div class="row d-flex">
-      <keep-comp v-for="keep in keeps" :key="keep.id" :keepProp="keep" />
+    <div class="row">
+      <div class="card-columns">
+        <keep-comp v-for="keep in keeps" :key="keep.id" :keepProp="keep" />
+      </div>
     </div>
   </div>
 </template>
