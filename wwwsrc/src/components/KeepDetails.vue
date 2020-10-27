@@ -1,20 +1,17 @@
 <template>
   <div class="keep-details">
-    <div class="card mb-3" style="max-width: 700px">
+    <div id="rightSize" class="card">
       <div class="row no-gutters">
         <div class="col-md-4">
-          <img :src="keep.img" class="card-img" alt="..." />
+          <img id="" :src="keep.img" class="card-img" alt="..." />
         </div>
-        <div class="col-md-8">
+        <div id="rightSide" class="col-md-8">
           <div class="card-body text-center mt-2 mb-3">
-            <span
-              >Views: {{ keep.views }} - Keeps: {{ keep.keeps }} - Shares:
-              {{ keep.shares }}</span
-            >
-            <h3 class="card-title text-center">{{ keep.name }}</h3>
-            <p class="card-text">{{ keep.description }}</p>
+            <span>Views: {{ keep.views }} - Keeps: {{ keep.keeps }}</span>
+            <h3 class="my-3 card-title text-center">{{ keep.name }}</h3>
+            <span class="card-text">{{ keep.description }}</span>
           </div>
-          <div class="d-flex">
+          <div class="d-flex align-items-stretch align-items-end">
             <div class="dropdown">
               <button
                 class="ml-1 btn btn-secondary dropdown-toggle"
@@ -44,6 +41,8 @@
                 @click="deleteKeep"
               ></a>
               <a v-else class="mx-3 fa fa-trash text-gray plusSz"></a>
+              <img style="max-width: 50px" :src="keep.creator.picture" alt="" />
+              <span class="ml-2">Created By: {{ this.keep.creator.name }}</span>
             </div>
           </div>
         </div>
@@ -77,6 +76,12 @@ export default {
     deleteKeep() {
       this.$store.dispatch("deleteKeep", this.keep.id);
     },
+    viewProfile() {
+      this.$router.push({
+        name: "Profile",
+        params: { profileId: this.keep.creator.id },
+      });
+    },
   },
   components: {},
 };
@@ -87,5 +92,13 @@ export default {
 .plusSz {
   zoom: 2;
   align-self: center;
+}
+#keepImg {
+  height: 60vh;
+  width: 60vw;
+}
+
+#rightSide {
+  height: 100%;
 }
 </style>

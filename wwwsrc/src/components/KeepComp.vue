@@ -13,11 +13,11 @@
     @click="setActiveKeep"
   >
     <div>
-      <h3>{{ keepProp.name }}</h3>
+      <h3 class="text-center">{{ keepProp.name }}</h3>
     </div>
     <div>
       <img
-        style="max-width: 25px"
+        style="max-width: 50px"
         :src="keepProp.creator.picture"
         @click="viewProfile"
         alt=""
@@ -59,7 +59,9 @@ export default {
       });
     },
     setActiveKeep() {
-      this.$store.dispatch("getActiveKeep", this.keepProp.id);
+      if (this.keepProp.id != this.$store.state.activeKeep.id) {
+        this.$store.dispatch("getActiveKeep", this.keepProp.id);
+      }
       this.$store.dispatch("getProfileVaults", this.profile.id);
     },
   },

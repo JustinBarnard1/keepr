@@ -12,9 +12,11 @@ namespace Keepr.Controllers
     public class VaultKeepsController : ControllerBase
     {
         private readonly VaultKeepsService _vks;
-        public VaultKeepsController(VaultKeepsService vks)
+        private readonly KeepsService _ks;
+        public VaultKeepsController(VaultKeepsService vks, KeepsService ks)
         {
             _vks = vks;
+            _ks = ks;
         }
 
         [HttpPost]
@@ -25,6 +27,7 @@ namespace Keepr.Controllers
             {
                 Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
                 newVc.CreatorId = userInfo.Id;
+                _ks.AddedToVault(newVc.KeepId);
                 _vks.Create(newVc);
                 return Ok("Successfully created");
             }

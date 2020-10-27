@@ -28,6 +28,10 @@ namespace Keepr.Services
             return original;
         }
 
+        internal void AddedToVault(int keepId)
+        {
+            _repo.AddKept(keepId);
+        }
         internal Keep Create(Keep newKeep)
         {
             newKeep.Id = _repo.Create(newKeep);

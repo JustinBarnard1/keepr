@@ -1,6 +1,6 @@
 <template>
   <div class="modal fade" :id="id" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content" :class="color">
         <slot name="body"></slot>
       </div>
@@ -33,4 +33,7 @@ export default {
 
 
 <style scoped>
+.modal-lg {
+  width: 100% !important;
+}
 </style>

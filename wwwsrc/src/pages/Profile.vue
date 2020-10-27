@@ -1,10 +1,24 @@
 <template>
   <div class="profile container-fluid">
-    <div v-if="this.$route.params != profile.id">
-      <h1>{{ searchedProfile.name }}'s Page</h1>
+    <div v-if="this.$route.params != profile.id" class="d-flex">
+      <div>
+        <img :src="searchedProfile.picture" alt="" />
+      </div>
+      <div>
+        <h1>{{ searchedProfile.name }}'s Page</h1>
+        <h4>Keeps: {{ keeps.length }}</h4>
+        <h4>Vaults: {{ vaults.length }}</h4>
+      </div>
     </div>
     <div v-else>
-      <h1>{{ profile.name }}'s Page</h1>
+      <div>
+        <img :src="profile.picture" alt="" />
+      </div>
+      <div>
+        <h1>{{ profile.name }}'s Page</h1>
+        <h4>Keeps: {{ keeps.length }}</h4>
+        <h4>Vaults: {{ vaults.length }}</h4>
+      </div>
     </div>
     <div class="row">
       <div class="col-12 d-flex">

@@ -42,6 +42,17 @@ namespace Keepr.Repositories
             _db.Execute(sql, new { keepId });
         }
 
+        internal void AddKept(int keepId)
+        {
+            string sql = @"
+            UPDATE keeps
+            SET
+            keeps = keeps + 1
+            WHERE
+            id = @keepId;";
+            _db.Execute(sql, new { keepId });
+        }
+
         internal IEnumerable<Keep> GetByVaultId(int id)
         {
             string sql = @"

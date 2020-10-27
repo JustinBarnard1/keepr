@@ -26,7 +26,8 @@ export default {
   },
   methods: {
     deleteVault() {
-      console.log("delete vault");
+      this.$store.dispatch("deleteVault", this.vaultProp.id);
+      this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
     },
     viewVault() {
       this.$router.push({
