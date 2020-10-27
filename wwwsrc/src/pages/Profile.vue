@@ -27,7 +27,34 @@
           class="pluslg fa fa-plus text-success mx-1"
           v-if="profile.id == searchedProfile.id"
           aria-hidden="true"
+          @click="creatingVault = true"
         ></i>
+      </div>
+      <div v-if="creatingVault">
+        <div class="create-vault">
+          <div class="card">
+            <h2>Create A New Vault</h2>
+            <form @submit.prevent="createVault">
+              <p>
+                Name: <input type="text" v-model="newVault.Name" required />
+                <br />
+                Description:
+                <input type="text" v-model="newVault.Description" required />
+                <br />
+                Private:
+                <input type="checkbox" v-model="newVault.IsPrivate" />
+                <br />
+                <button
+                  @click="creatingVault = false"
+                  class="mr-3 btn btn-outline-warning"
+                >
+                  Cancel
+                </button>
+                <button type="btn" class="btn btn-outline-info">Create</button>
+              </p>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
     <div v-if="vaults != null" class="row">
@@ -48,7 +75,33 @@
           class="pluslg fa fa-plus text-success mx-1"
           v-if="profile.id == searchedProfile.id"
           aria-hidden="true"
+          @click="creatingKeep = true"
         ></i>
+      </div>
+      <div v-if="creatingKeep">
+        <div class="create-keep">
+          <div class="card">
+            <h2>Create A New Keep</h2>
+            <form @submit.prevent="createKeep">
+              <p>
+                Name: <input type="text" v-model="newKeep.Name" required />
+                <br />
+                Description:
+                <input type="text" v-model="newKeep.Description" required />
+                <br />
+                Image URL: <input type="text" v-model="newKeep.Img" required />
+                <br />
+                <button
+                  @click="creatingKeep = false"
+                  class="mr-3 btn btn-outline-warning"
+                >
+                  Cancel
+                </button>
+                <button type="btn" class="btn btn-outline-info">Create</button>
+              </p>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -61,10 +114,24 @@
 <script>
 import vaultComp from "../components/VaultComp";
 import keepComp from "../components/KeepComp";
+import createKeep from "../components/CreateKeep";
 export default {
   name: "profile",
   data() {
-    return {};
+    return {
+      creatingKeep: false,
+      creatingVault: false,
+      newKeep: {
+        Name: "",
+        Description: "",
+        Img: "",
+      },
+      newVault: {
+        Name: "",
+        Description: "",
+        IsPrivate: false,
+      },
+    };
   },
   computed: {
     keeps() {
@@ -89,10 +156,20 @@ export default {
     this.$store.dispatch("getSearchedProfile", this.$route.params.profileId);
     this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
   },
-  methods: {},
+  methods: {
+    createKeep() {
+      this.creatingKeep = false;
+      this.$store.dispatch("createKeep", this.newKeep);
+    },
+    createVault() {
+      this.creatingVault = false;
+      this.$store.dispatch("createVault", this.newVault);
+    },
+  },
   components: {
     keepComp,
     vaultComp,
+    createKeep,
   },
 };
 </script>

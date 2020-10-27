@@ -7,13 +7,13 @@
       backgroundRepeat: 'no-repeat',
     }"
     class="media m-2 keep-comp card"
-    style="min-height: 20vh"
+    style="min-height: 20vh; min-width: 20vw"
     data-toggle="modal"
     :data-target="'#' + modalId"
     @click="setActiveKeep"
   >
     <div>
-      <h3 class="text-center">{{ keepProp.name }}</h3>
+      <h3 class="text-center text-light">{{ keepProp.name }}</h3>
     </div>
     <div>
       <img
