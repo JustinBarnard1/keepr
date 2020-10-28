@@ -33,7 +33,7 @@ namespace Keepr.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Keep>>> GetById(int id)
+        public async Task<ActionResult<IEnumerable<ViewModelKeep>>> GetById(int id)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace Keepr.Controllers
 
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<ActionResult<Keep>> Edit(int id, [FromBody] Keep editKeep)
+        public async Task<ActionResult<ViewModelKeep>> Edit(int id, [FromBody] ViewModelKeep editKeep)
         {
             try
             {

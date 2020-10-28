@@ -19,6 +19,11 @@ namespace Keepr.Controllers
             _ks = ks;
         }
 
+        // [HttpGet("{id}")]
+        // [Authorize]
+        // public async Task<ActionResult<string>> GetVaultKeep([FromBody] string keepId, int id){}
+
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<string>> Create([FromBody] VaultKeep newVc)

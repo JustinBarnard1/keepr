@@ -16,7 +16,7 @@ namespace Keepr.Repositories
             _db = db;
         }
 
-        internal IEnumerable<Keep> GetAll()
+        internal IEnumerable<ViewModelKeep> GetAll()
         {
             string sql = @"
             SELECT
@@ -24,7 +24,7 @@ namespace Keepr.Repositories
             p.*
             FROM keeps k
             JOIN profiles p ON k.creatorId = p.id;";
-            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
+            return _db.Query<ViewModelKeep, Profile, ViewModelKeep>(sql, (keep, profile) =>
             {
                 keep.Creator = profile;
                 return keep;
@@ -53,19 +53,19 @@ namespace Keepr.Repositories
             _db.Execute(sql, new { keepId });
         }
 
-        internal IEnumerable<Keep> GetByVaultId(int id)
+        internal IEnumerable<ViewModelKeep> GetByVaultId(int id)
         {
             string sql = @"
             SELECT
             k.*,
-            vk.*,
+            vk.id AS vaultKeepId,
             p.*
             FROM
             keeps k
             JOIN vaultkeeps vk ON k.id = vk.keepId
             JOIN profiles p ON k.creatorId = p.id
             WHERE vk.vaultId = @id;";
-            return _db.Query<Keep, VaultKeep, Profile, Keep>(sql, (keep, vaultkeep, profile) => { keep.Creator = profile; return keep; }, new { id }, splitOn: "id");
+            return _db.Query<ViewModelKeep, Profile, ViewModelKeep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { id }, splitOn: "id");
         }
 
         internal int Create(Keep newKeep)
@@ -79,7 +79,7 @@ namespace Keepr.Repositories
             return _db.ExecuteScalar<int>(sql, newKeep);
         }
 
-        internal IEnumerable<Keep> GetByCreatorId(string queryId)
+        internal IEnumerable<ViewModelKeep> GetByCreatorId(string queryId)
         {
             string sql = @"
             SELECT
@@ -88,10 +88,10 @@ namespace Keepr.Repositories
             FROM keeps k
             JOIN profiles p ON k.creatorId = p.id
             WHERE creatorId = @queryId;";
-            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { queryId }, splitOn: "id");
+            return _db.Query<ViewModelKeep, Profile, ViewModelKeep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { queryId }, splitOn: "id");
         }
 
-        internal Keep GetById(int keepId)
+        internal ViewModelKeep GetById(int keepId)
         {
             string sql = @"
             SELECT
@@ -100,10 +100,10 @@ namespace Keepr.Repositories
             FROM keeps k
             JOIN profiles p ON k.creatorId = p.id
             WHERE k.id = @keepId;";
-            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { keepId }, splitOn: "id").FirstOrDefault();
+            return _db.Query<ViewModelKeep, Profile, ViewModelKeep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { keepId }, splitOn: "id").FirstOrDefault();
         }
 
-        internal Keep Edit(Keep editKeep)
+        internal ViewModelKeep Edit(ViewModelKeep editKeep)
         {
             string sql = @"
             UPDATE keeps

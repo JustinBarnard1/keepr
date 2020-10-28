@@ -18,6 +18,7 @@ namespace Keepr.Services
 
         internal void Delete(string userId, int queryId)
         {
+
             var data = _repo.GetById(queryId);
             if (data == null) { throw new Exception("invalid Id"); }
             if (data.CreatorId != userId)

@@ -12,7 +12,7 @@
     :data-target="'#' + modalId"
     @click="setActiveKeep"
   >
-    <div>
+    <div class="d-flex">
       <h3 class="text-center text-light">{{ keepProp.name }}</h3>
     </div>
     <div>
@@ -47,6 +47,9 @@ export default {
     modalId() {
       return "modal" + this.keepProp.id;
     },
+    vaultskeeps() {
+      return this.$store.state.keeps;
+    },
   },
   methods: {
     deleteKeep() {
@@ -60,9 +63,11 @@ export default {
     },
     setActiveKeep() {
       if (this.keepProp.id != this.$store.state.activeKeep.id) {
-        this.$store.dispatch("getActiveKeep", this.keepProp.id);
+        this.keepProp.views++;
+        this.$store.dispatch("getActiveKeep", this.keepProp);
       }
       this.$store.dispatch("getProfileVaults", this.profile.id);
+      this.$store.dispatch("getKeepsByVaultId", this.$route.params.vaultId);
     },
   },
   props: ["keepProp"],

@@ -12,7 +12,7 @@
             <span class="card-text">{{ keep.description }}</span>
           </div>
           <div class="d-flex align-items-stretch align-items-end">
-            <div class="dropdown">
+            <div v-if="this.$route.name != 'Vault'" class="dropdown">
               <button
                 class="ml-1 btn btn-secondary dropdown-toggle"
                 type="button"
@@ -34,6 +34,15 @@
                 >
               </div>
             </div>
+            <div v-else>
+              <button
+                @click="removeKeepFromVault()"
+                type="button"
+                class="btn btn-danger"
+              >
+                Remove From Vault
+              </button>
+            </div>
             <div>
               <a
                 v-if="$store.state.profile.id == keep.creatorId"
@@ -42,7 +51,11 @@
               ></a>
               <a v-else class="mx-3 fa fa-trash text-gray plusSz"></a>
               <img style="max-width: 50px" :src="keep.creator.picture" alt="" />
-              <span class="ml-2">Created By: {{ this.keep.creator.name }}</span>
+              <div>
+                <span class="ml-2"
+                  >Created By: {{ this.keep.creator.name }}</span
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -81,6 +94,10 @@ export default {
         name: "Profile",
         params: { profileId: this.keep.creator.id },
       });
+    },
+    removeKeepFromVault() {
+      this.$store.dispatch("removeKeepFromVault", this.keep.vaultKeepId);
+      this.$store.dispatch("getKeepsByVaultId", this.$route.params.vaultId);
     },
   },
   components: {},

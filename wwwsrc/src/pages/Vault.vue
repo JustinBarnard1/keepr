@@ -1,7 +1,9 @@
 <template>
   <div class="vault">
     <h1>Vault Page</h1>
-    <keep-comp v-for="keep in keeps" :key="keep.id" :keepProp="keep" />
+    <div class="row">
+      <keep-comp v-for="keep in keeps" :key="keep.id" :keepProp="keep" />
+    </div>
   </div>
 </template>
 
@@ -18,14 +20,12 @@ export default {
       return this.$store.state.keeps;
     },
   },
-  methods: {
-    createVault() {
-      console.log("create vault");
-    },
-    deleteVault() {
-      console.log("delete vault");
+  watch: {
+    keeps: function (allKeeps) {
+      this.$store.dispatch("getKeepsByVaultId", this.$route.params.vaultId);
     },
   },
+  methods: {},
   components: {
     keepComp,
   },

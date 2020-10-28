@@ -15,15 +15,15 @@ namespace Keepr.Services
             _repo = repo;
         }
 
-        internal IEnumerable<Keep> GetAll()
+        internal IEnumerable<ViewModelKeep> GetAll()
         {
             return _repo.GetAll();
         }
 
-        internal Keep GetById(string profileId, int keepId)
+        internal ViewModelKeep GetById(string profileId, int keepId)
         {
             _repo.AddView(keepId);
-            Keep original = _repo.GetById(keepId);
+            ViewModelKeep original = _repo.GetById(keepId);
             if (original == null) { throw new Exception("Invalid Id"); }
             return original;
         }
@@ -38,28 +38,28 @@ namespace Keepr.Services
             return newKeep;
         }
 
-        internal IEnumerable<Keep> GetAllByVaultId(int id)
+        internal IEnumerable<ViewModelKeep> GetAllByVaultId(int id)
         {
             return _repo.GetByVaultId(id);
         }
 
         internal object Delete(int keepId, string userId)
         {
-            Keep original = _repo.GetById(keepId);
+            ViewModelKeep original = _repo.GetById(keepId);
             if (original == null) { throw new Exception("Invalid Id"); }
             if (original.CreatorId != userId) { throw new Exception("Access Denied. This is not yours"); }
             _repo.Remove(keepId);
             return "Succesfully Delorted";
         }
 
-        internal IEnumerable<Keep> GetAllByCreatorId(string queryId, string userId)
+        internal IEnumerable<ViewModelKeep> GetAllByCreatorId(string queryId, string userId)
         {
             return _repo.GetByCreatorId(queryId);
         }
 
-        internal Keep Edit(Keep editKeep, string id)
+        internal ViewModelKeep Edit(ViewModelKeep editKeep, string id)
         {
-            Keep original = _repo.GetById(editKeep.Id);
+            ViewModelKeep original = _repo.GetById(editKeep.Id);
             if (original == null) { throw new Exception("Invalid Id"); }
             if (original.CreatorId != id) { throw new Exception("Access Denied, this is not yours"); }
             editKeep.Name = editKeep.Name == null ? original.Name : editKeep.Name;
