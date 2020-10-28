@@ -9,10 +9,12 @@ namespace Keepr.Services
     public class KeepsService
     {
         private readonly KeepsRepository _repo;
+        private readonly VaultsRepository _vRepo;
 
-        public KeepsService(KeepsRepository repo)
+        public KeepsService(KeepsRepository repo, VaultsRepository vRepo)
         {
             _repo = repo;
+            _vRepo = vRepo;
         }
 
         internal IEnumerable<ViewModelKeep> GetAll()
@@ -38,9 +40,14 @@ namespace Keepr.Services
             return newKeep;
         }
 
-        internal IEnumerable<ViewModelKeep> GetAllByVaultId(int id)
+        internal IEnumerable<ViewModelKeep> GetAllByVaultId(string userId, int id)
         {
-            return _repo.GetByVaultId(id);
+            Vault vault = _vRepo.GetVaultById(id.ToString());
+            if (vault.IsPrivate != false && userId != vault.CreatorId)
+            {
+                throw new Exception("Access Denied, This is not yours.");
+            }
+            return _repo.GetByVaultId(id).ToList().FindAll(k => k.CreatorId == userId);
         }
 
         internal object Delete(int keepId, string userId)

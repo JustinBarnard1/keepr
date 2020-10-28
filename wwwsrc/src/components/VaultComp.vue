@@ -35,8 +35,10 @@ export default {
     deleteVault() {
       let c = confirm("Are you sure want to delete this?");
       if (c == true) {
-        this.$store.dispatch("deleteVault", this.vaultProp.id);
-        this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
+        let payload = {};
+        payload.id = this.vaultProp.id;
+        payload.route = this.$route.params.profileId;
+        this.$store.dispatch("deleteVault", payload);
       }
     },
     viewVault() {

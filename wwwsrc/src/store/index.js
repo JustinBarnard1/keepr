@@ -82,17 +82,23 @@ export default new Vuex.Store({
         console.error(e)
       }
     },
-    async deleteKeep({ commit, dispatch }, keepId) {
+    async deleteKeep({ commit, dispatch }, payload) {
       try {
-        await api.delete("keeps/" + keepId)
-        dispatch("getKeeps")
+        await api.delete("keeps/" + payload.keep.id)
+          .then(n => {
+            dispatch("getKeeps")
+            dispatch("getProfileKeeps", payload.profId)
+          })
       } catch (e) {
         console.error(e)
       }
     },
-    async deleteVault({ commit, dispatch }, vaultId) {
+    async deleteVault({ commit, dispatch }, payload) {
       try {
-        await api.delete("vaults/" + vaultId)
+        await api.delete("vaults/" + payload.id)
+          .then(n => {
+            dispatch("getProfileVaults", payload.route)
+          })
       } catch (e) {
         console.error(e)
       }

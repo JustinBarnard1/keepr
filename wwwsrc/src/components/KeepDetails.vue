@@ -97,9 +97,15 @@ export default {
       $(".modal").hide();
     },
     deleteKeep() {
-      this.$store.dispatch("deleteKeep", this.keep.id);
-      $(".modal-backdrop").hide();
-      $(".modal").hide();
+      let c = confirm("Are You Sure You Want To delete this?");
+      if (c == true) {
+        let payload = {};
+        payload.keep = this.keep;
+        payload.profId = this.$route.params.profileId;
+        this.$store.dispatch("deleteKeep", payload);
+        $(".modal-backdrop").hide();
+        $(".modal").hide();
+      }
     },
     removeKeepFromVault(keep) {
       console.log(keep);

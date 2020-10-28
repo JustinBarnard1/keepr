@@ -60,6 +60,8 @@ export default {
       let c = confirm("Are you sure you want to delete this?");
       if (c == true) {
         this.$store.dispatch("deleteKeep", this.keepProp.id);
+        $(".modal-backdrop").hide();
+        $(".modal").hide();
       }
     },
     viewProfile() {
@@ -72,8 +74,12 @@ export default {
       if (this.$route.name != "Vault") {
         this.$store.dispatch("getActiveKeep", this.keepProp);
         this.$store.dispatch("getProfileVaults", this.profile.id);
+        $(".modal-backdrop").hide();
+        $(".modal").hide();
       }
       this.$store.dispatch("activeVaultKeep", this.keepProp);
+      $(".modal-backdrop").hide();
+      $(".modal").hide();
     },
   },
   props: ["keepProp"],
