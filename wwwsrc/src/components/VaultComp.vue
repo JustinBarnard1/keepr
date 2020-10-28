@@ -1,6 +1,10 @@
 <template>
   <div
-    v-if="vaultProp.isPrivate == false"
+    v-if="
+      vaultProp.isPrivate == false ||
+      (vaultProp.isPrivate == true &&
+        this.$route.params.profileId == vaultProp.creatorId)
+    "
     class="vault-comp card col-3 justify-content-center m-3"
   >
     <i
@@ -29,14 +33,18 @@ export default {
   },
   methods: {
     deleteVault() {
-      this.$store.dispatch("deleteVault", this.vaultProp.id);
-      this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
+      let c = confirm("Are you sure want to delete this?");
+      if (c == true) {
+        this.$store.dispatch("deleteVault", this.vaultProp.id);
+        this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
+      }
     },
     viewVault() {
       this.$router.push({
         name: "Vault",
         params: { vaultId: this.vaultProp.id },
       });
+      this.$store.dispatch("getKeepsByVaultId", this.$route.params.vaultId);
     },
   },
   components: {},

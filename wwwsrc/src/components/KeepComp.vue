@@ -8,12 +8,16 @@
     }"
     class="media m-2 keep-comp card"
     style="min-height: 20vh; min-width: 20vw"
-    data-toggle="modal"
-    :data-target="'#' + modalId"
-    @click="setActiveKeep"
   >
     <div class="d-flex">
-      <h3 class="text-center text-light">{{ keepProp.name }}</h3>
+      <h3
+        @click="setActiveKeep"
+        data-toggle="modal"
+        :data-target="'#' + modalId"
+        class="text-center text-light"
+      >
+        {{ keepProp.name }}
+      </h3>
     </div>
     <div>
       <img
@@ -53,7 +57,10 @@ export default {
   },
   methods: {
     deleteKeep() {
-      this.$store.dispatch("deleteKeep", this.keepProp.id);
+      let c = confirm("Are you sure you want to delete this?");
+      if (c == true) {
+        this.$store.dispatch("deleteKeep", this.keepProp.id);
+      }
     },
     viewProfile() {
       this.$router.push({
@@ -62,12 +69,11 @@ export default {
       });
     },
     setActiveKeep() {
-      if (this.keepProp.id != this.$store.state.activeKeep.id) {
-        this.keepProp.views++;
+      if (this.$route.name != "Vault") {
         this.$store.dispatch("getActiveKeep", this.keepProp);
+        this.$store.dispatch("getProfileVaults", this.profile.id);
       }
-      this.$store.dispatch("getProfileVaults", this.profile.id);
-      this.$store.dispatch("getKeepsByVaultId", this.$route.params.vaultId);
+      this.$store.dispatch("activeVaultKeep", this.keepProp);
     },
   },
   props: ["keepProp"],

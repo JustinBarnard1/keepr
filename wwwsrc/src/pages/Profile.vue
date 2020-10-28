@@ -150,8 +150,14 @@ export default {
     //   return this.$store.state.searchedVaults;
     // },
   },
+  watch: {
+    "$route.params.profileId": function (profileId) {
+      this.$store.dispatch("getProfileKeeps", this.$route.params.profileId);
+      this.$store.dispatch("getSearchedProfile", this.$route.params.profileId);
+      this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
+    },
+  },
   mounted() {
-    this.$store.dispatch("getProfile");
     this.$store.dispatch("getProfileKeeps", this.$route.params.profileId);
     this.$store.dispatch("getSearchedProfile", this.$route.params.profileId);
     this.$store.dispatch("getProfileVaults", this.$route.params.profileId);

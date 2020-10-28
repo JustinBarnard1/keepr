@@ -24,6 +24,9 @@ export default {
     keeps() {
       return this.$store.state.keeps;
     },
+    profile() {
+      return this.$store.state.profile;
+    },
   },
   methods: {},
   components: {

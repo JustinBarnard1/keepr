@@ -36,7 +36,7 @@
             </div>
             <div v-else>
               <button
-                @click="removeKeepFromVault()"
+                @click="removeKeepFromVault(keep)"
                 type="button"
                 class="btn btn-danger"
               >
@@ -50,9 +50,14 @@
                 @click="deleteKeep"
               ></a>
               <a v-else class="mx-3 fa fa-trash text-gray plusSz"></a>
-              <img style="max-width: 50px" :src="keep.creator.picture" alt="" />
+              <img
+                v-if="keep.creator"
+                style="max-width: 50px"
+                :src="keep.creator.picture"
+                alt=""
+              />
               <div>
-                <span class="ml-2"
+                <span v-if="this.keep.creator" class="ml-2"
                   >Created By: {{ this.keep.creator.name }}</span
                 >
               </div>
@@ -78,6 +83,9 @@ export default {
     vaults() {
       return this.$store.state.profileVaults;
     },
+    keeps() {
+      return this.$store.state.keeps;
+    },
   },
   methods: {
     addToVault(id) {
@@ -85,19 +93,25 @@ export default {
       createPayload.keepId = this.keep.id;
       createPayload.vaultId = id;
       this.$store.dispatch("addKeepToVault", createPayload);
+      $(".modal-backdrop").hide();
+      $(".modal").hide();
     },
     deleteKeep() {
       this.$store.dispatch("deleteKeep", this.keep.id);
+      $(".modal-backdrop").hide();
+      $(".modal").hide();
     },
-    viewProfile() {
-      this.$router.push({
-        name: "Profile",
-        params: { profileId: this.keep.creator.id },
-      });
-    },
-    removeKeepFromVault() {
-      this.$store.dispatch("removeKeepFromVault", this.keep.vaultKeepId);
-      this.$store.dispatch("getKeepsByVaultId", this.$route.params.vaultId);
+    removeKeepFromVault(keep) {
+      console.log(keep);
+      let c = confirm("Are you sure you want to remove this?");
+      if (c == true) {
+        let payload = {};
+        payload.keep = keep;
+        payload.route = this.$route.params.vaultId;
+        this.$store.dispatch("removeKeepFromVault", payload);
+        $(".modal-backdrop").hide();
+        $(".modal").hide();
+      }
     },
   },
   components: {},

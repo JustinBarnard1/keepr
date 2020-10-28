@@ -1,7 +1,7 @@
 <template>
-  <div class="vault">
+  <div class="vault container-fluid">
     <h1>Vault Page</h1>
-    <div class="row">
+    <div v-if="keeps" class="row">
       <keep-comp v-for="keep in keeps" :key="keep.id" :keepProp="keep" />
     </div>
   </div>
@@ -18,11 +18,6 @@ export default {
   computed: {
     keeps() {
       return this.$store.state.keeps;
-    },
-  },
-  watch: {
-    keeps: function (allKeeps) {
-      this.$store.dispatch("getKeepsByVaultId", this.$route.params.vaultId);
     },
   },
   methods: {},

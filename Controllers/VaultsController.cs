@@ -22,7 +22,6 @@ namespace Keepr.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<ActionResult<Vault>> GetVaultById(string id)
         {
             try
