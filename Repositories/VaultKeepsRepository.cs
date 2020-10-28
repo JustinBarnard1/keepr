@@ -12,20 +12,22 @@ namespace Keepr.Repositories
         {
             _db = db;
         }
-        internal void Create(VaultKeep newVc)
+        internal int Create(VaultKeep newVc)
         {
             string sql = @"
             INSERT INTO vaultkeeps
             (creatorId, vaultId, keepId)
             VALUES
-            (@CreatorId, @VaultId, @KeepId);";
-            _db.Execute(sql, newVc);
+            (@CreatorId, @VaultId, @KeepId);
+            SELECT LAST_INSERT_ID(); ";
+            return _db.ExecuteScalar<int>(sql, newVc);
         }
 
-        internal void Delete(int id)
+        internal VaultKeep Delete(int id)
         {
             string sql = "DELETE FROM vaultkeeps WHERE id = @id LIMIT 1;";
-            _db.Execute(sql, new { id });
+            var deleted = _db.ExecuteScalar<VaultKeep>(sql, new { id });
+            return deleted;
         }
 
         internal VaultKeep GetById(int id)

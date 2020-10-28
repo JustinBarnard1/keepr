@@ -38,7 +38,11 @@ namespace Keepr.Services
 
         internal Vault GetById(string userId, string queryId)
         {
-            return _repo.GetVaultById(queryId);
+            Vault vault = _repo.GetVaultById(queryId);
+            if (vault == null) { throw new Exception("invalid Id"); }
+            if (vault.CreatorId != userId && vault.IsPrivate == true) { throw new Exception("Access Denied, this is not yours"); }
+            if (vault.IsPrivate == true) { throw new Exception("Access Denied, this is not yours"); }
+            return vault;
         }
     }
 }

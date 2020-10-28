@@ -1,5 +1,8 @@
 <template>
-  <div class="vault-comp card col-3 justify-content-center m-3">
+  <div
+    v-if="vaultProp.isPrivate == false"
+    class="vault-comp card col-3 justify-content-center m-3"
+  >
     <i
       class="fa fa-times text-danger"
       v-if="profile.id == vaultProp.creatorId"
