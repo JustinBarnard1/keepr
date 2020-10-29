@@ -151,15 +151,35 @@ export default {
     // },
   },
   watch: {
-    "$route.params.profileId": function (profileId) {
+    "$route.params.profileId": function (route) {
       this.$store.dispatch("getProfileKeeps", this.$route.params.profileId);
       this.$store.dispatch("getSearchedProfile", this.$route.params.profileId);
       this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
     },
+    searchedProfile: function (profileId) {
+      if (this.searchedProfile.id != this.$route.params.profileId) {
+        this.$store.dispatch("getProfileKeeps", this.$route.params.profileId);
+        this.$store.dispatch(
+          "getSearchedProfile",
+          this.$route.params.profileId
+        );
+        this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
+      }
+    },
+    profile: function (myProfile) {
+      if (this.profile.id == this.$route.params.profileId) {
+        this.$store.dispatch("getProfileKeeps", this.$route.params.profileId);
+        this.$store.dispatch(
+          "getSearchedProfile",
+          this.$route.params.profileId
+        );
+        this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
+      }
+    },
   },
   mounted() {
-    this.$store.dispatch("getProfileKeeps", this.$route.params.profileId);
     this.$store.dispatch("getSearchedProfile", this.$route.params.profileId);
+    this.$store.dispatch("getProfileKeeps", this.$route.params.profileId);
     this.$store.dispatch("getProfileVaults", this.$route.params.profileId);
   },
   methods: {
