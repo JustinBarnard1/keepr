@@ -93,8 +93,7 @@ export default {
       createPayload.keepId = this.keep.id;
       createPayload.vaultId = id;
       this.$store.dispatch("addKeepToVault", createPayload);
-      $(".modal-backdrop").hide();
-      $(".modal").hide();
+      $("#modal" + this.keep.id).modal("hide");
     },
     deleteKeep() {
       let c = confirm("Are You Sure You Want To delete this?");
@@ -103,8 +102,7 @@ export default {
         payload.keep = this.keep;
         payload.profId = this.$route.params.profileId;
         this.$store.dispatch("deleteKeep", payload);
-        $(".modal-backdrop").hide();
-        $(".modal").hide();
+        $("#modal" + this.keep.id).modal("hide");
       }
     },
     removeKeepFromVault(keep) {
@@ -115,8 +113,7 @@ export default {
         payload.keep = keep;
         payload.route = this.$route.params.vaultId;
         this.$store.dispatch("removeKeepFromVault", payload);
-        $(".modal-backdrop").hide();
-        $(".modal").hide();
+        $("#modal" + this.keep.id).modal("hide");
       }
     },
   },
