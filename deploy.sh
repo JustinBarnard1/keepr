@@ -1,5 +1,10 @@
+cd wwwsrc
+npm run build
+cd ..
 dotnet publish -c Release
-docker build -t TAG_NAME ./bin/Release/netcoreapp3.1/publish
-docker tag TAG_NAME registry.heroku.com/HEROKU_APP_NAME/web
-docker push registry.heroku.com/HEROKU_APP_NAME/web
-heroku container:release web -a HEROKU_APP_NAME
+docker build -t keepr-demo ./
+docker tag keepr-demo registry.heroku.com/keepr3/web
+docker push registry.heroku.com/keepr3/web
+heroku container:release web -a keepr3
+echo press any key
+read end
