@@ -17,8 +17,8 @@ export default new Vuex.Store({
     setProfile(state, profile) {
       state.profile = profile;
     },
-    setKeeps(state, keeps) {
-      state.keeps = keeps;
+    setKeeps(state, allKeeps) {
+      state.keeps = allKeeps;
     },
     setSearchedProfile(state, profile) {
       state.searchedProfile = profile;
