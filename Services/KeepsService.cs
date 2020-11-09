@@ -47,7 +47,7 @@ namespace Keepr.Services
             {
                 throw new Exception("Access Denied, This is not yours.");
             }
-            return _repo.GetByVaultId(id).ToList().FindAll(k => k.CreatorId == userId);
+            return _repo.GetByVaultId(id).ToList();
         }
 
         internal object Delete(int keepId, string userId)
