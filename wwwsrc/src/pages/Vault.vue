@@ -1,5 +1,5 @@
 <template>
-  <div class="vault container-fluid">
+  <div class="vault container-fluid bg-secondary">
     <h1>Vault Page</h1>
     <div v-if="keeps" class="row">
       <keep-comp v-for="keep in keeps" :key="keep.id" :keepProp="keep" />
@@ -32,4 +32,7 @@ export default {
 
 
 <style scoped>
+.vault {
+  flex-grow: 1;
+}
 </style>

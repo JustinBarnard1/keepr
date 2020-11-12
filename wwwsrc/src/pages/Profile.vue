@@ -1,5 +1,5 @@
 <template>
-  <div class="profile container-fluid">
+  <div class="profile container-fluid bg-secondary">
     <div v-if="this.$route.params != profile.id" class="d-flex">
       <div>
         <img :src="searchedProfile.picture" alt="" />
@@ -22,7 +22,7 @@
     </div>
     <div class="row">
       <div class="col-12 d-flex">
-        <h1>Vaults</h1>
+        <h1 class="mt-1">Vaults</h1>
         <i
           class="pluslg fa fa-plus text-success mx-1"
           v-if="profile.id == searchedProfile.id"
@@ -35,7 +35,7 @@
           <div class="card">
             <h2>Create A New Vault</h2>
             <form @submit.prevent="createVault">
-              <p>
+              <p class="my-1">
                 Name: <input type="text" v-model="newVault.Name" required />
                 <br />
                 Description:
@@ -83,7 +83,7 @@
           <div class="card">
             <h2>Create A New Keep</h2>
             <form @submit.prevent="createKeep">
-              <p>
+              <p class="my-1">
                 Name: <input type="text" v-model="newKeep.Name" required />
                 <br />
                 Description:
@@ -104,7 +104,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row m-3">
       <keep-comp v-for="keep in keeps" :key="keep.id" :keepProp="keep" />
     </div>
   </div>
@@ -205,5 +205,8 @@ export default {
 .pluslg {
   zoom: 2;
   align-self: center;
+}
+.profile {
+  flex-grow: 1;
 }
 </style>

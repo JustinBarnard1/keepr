@@ -1,12 +1,10 @@
 <template>
-  <div class="home container-fluid">
+  <div class="home container-fluid bg-secondary">
     <div class="row d-flex flex-column">
-      <h1 class="col text-center">Welcome</h1>
+      <h1 class="mt-3 col text-center">Welcome</h1>
     </div>
-    <div class="row">
-      <div class="card-columns">
-        <keep-comp v-for="keep in keeps" :key="keep.id" :keepProp="keep" />
-      </div>
+    <div class="row my-3 d-flex justify-content-around">
+      <keep-comp v-for="keep in keeps" :key="keep.id" :keepProp="keep" />
     </div>
   </div>
 </template>
@@ -37,3 +35,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.home {
+  flex-grow: 1;
+}
+</style>

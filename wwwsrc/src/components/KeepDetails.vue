@@ -38,7 +38,7 @@
               <button
                 @click="removeKeepFromVault(keep)"
                 type="button"
-                class="btn btn-danger"
+                class="btn btn-danger mr-3"
               >
                 Remove From Vault
               </button>
@@ -46,10 +46,11 @@
             <div>
               <a
                 v-if="$store.state.profile.id == keep.creatorId"
-                class="mx-3 fa fa-trash text-danger plusSz"
+                class="ml-3 mr-2 fa fa-trash text-danger plusSz"
                 @click="deleteKeep"
               ></a>
               <img
+                class="ml-3"
                 v-if="keep.creator"
                 style="max-width: 50px"
                 :src="keep.creator.picture"

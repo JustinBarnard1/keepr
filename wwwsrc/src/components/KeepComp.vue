@@ -6,10 +6,10 @@
       backgroundPosition: 'center center',
       backgroundRepeat: 'no-repeat',
     }"
-    class="media m-2 keep-comp card"
-    style="min-height: 20vh; min-width: 20vw"
+    class="col-3 keep-comp card justify-content-between"
+    style="height: 25vh; min-width: 20vw; max-width: 23vw"
   >
-    <div class="d-flex">
+    <div>
       <h3
         @click="setActiveKeep"
         data-toggle="modal"
@@ -19,7 +19,7 @@
         {{ keepProp.name }}
       </h3>
     </div>
-    <div>
+    <div class="d-flex align-self-end justify-content-end">
       <img
         style="max-width: 50px"
         :src="keepProp.creator.picture"
@@ -100,9 +100,7 @@ div.modal.my-modal .modal-dialog {
   width: 700px;
 }
 
-.fillit {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+.flex-fill {
+  flex: 1;
 }
 </style>

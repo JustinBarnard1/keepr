@@ -15,7 +15,7 @@ export default {
     await onAuth();
     if (this.$auth.isAuthenticated) {
       setBearer(this.$auth.bearer);
-      this.$store.dispatch("getProfile")
+      this.$store.dispatch("getProfile");
       //NOTE if you want to do something everytime the user logs in, do so here
     }
   },
@@ -28,4 +28,9 @@ export default {
 @import "./assets/_variables.scss";
 @import "bootstrap";
 @import "./assets/_overrides.scss";
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 </style>
