@@ -49,7 +49,6 @@
                 class="mx-3 fa fa-trash text-danger plusSz"
                 @click="deleteKeep"
               ></a>
-              <a v-else class="mx-3 fa fa-trash text-gray plusSz"></a>
               <img
                 v-if="keep.creator"
                 style="max-width: 50px"
